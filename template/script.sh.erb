@@ -6,7 +6,7 @@ setup_env () {
 
   module load <%= context.version %>
   echo R version is <%= context.version %>
-  RSPATH="/software/external/rstudio/2022.07.0-548/bin/"
+  RSPATH="/software/external/rstudio/2022.07.0-548/bin"
  
   module load <%= context.modules %>
 }
@@ -60,7 +60,7 @@ set -x
 echo "Starting up rserver..."
 
 module load openssl/1.1.1b-gcc/9.5.0
-${RSPATH}rserver \
+${RSPATH}/rserver \
   --www-port ${port} \
   --auth-none 0 \
   --auth-pam-helper-path "${RSTUDIO_AUTH}" \
