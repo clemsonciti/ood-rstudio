@@ -65,6 +65,8 @@ echo "Starting up rserver..."
 #echo $LD_PRELOAD
 
 module load anaconda3/2022.05-gcc/9.5.0
+export LD_PRELOAD=/lib64/libuuid.so.1:$LD_PRELOAD
+
 ${RSPATH}/rserver \
   --www-port ${port} \
   --auth-none 0 \
