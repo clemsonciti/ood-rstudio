@@ -59,7 +59,7 @@ set -x
 # Launch the RStudio Server
 echo "Starting up rserver..."
 
-export LD_PRELOAD="/software/spackages/linux-rocky8-x86_64/gcc-9.5.0/openssl-1.1.1b-4vv4aak5ml5bapbjypskobgsfynlomdh/lib/libcrypto.so.1.1":$LD_PRELOAD
+export LD_PRELOAD="/software/spackages/linux-rocky8-x86_64/gcc-9.5.0/krb5-1.19.3-bugdaxzdsvc26ijskck7ieqag62iwgls/lib/libk5crypto.so.3":$LD_PRELOAD
 echo $LD_PRELOAD
 
 ${RSPATH}/rserver \
