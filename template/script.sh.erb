@@ -6,8 +6,8 @@ setup_env () {
 
   module load <%= context.version %>
   echo R version is <%= context.version %>
-  RSPATH="/software/external/rstudio/2022.07.0-548/bin"
- 
+  #RSPATH="/software/external/rstudio/2022.07.0-548/bin"
+  RSPATH="/software/external/rstudio/1.3.959/bin"
   module load <%= context.modules %>
 }
 setup_env
@@ -75,6 +75,7 @@ ${RSPATH}/rserver \
   --rsession-path "${RSESSION_WRAPPER_FILE}" \
   --server-data-dir "${TMPDIR}" \
   --server-working-dir "${TMPDIR}" \
-  --server-user "${USER}" \
-  --database-config-file "${TMPDIR}/database.conf" \
+  --server-user "${USER}" \ 
   --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key"
+  
+#--database-config-file "${TMPDIR}/database.conf" \
