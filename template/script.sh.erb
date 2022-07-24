@@ -59,7 +59,9 @@ set -x
 # Launch the RStudio Server
 echo "Starting up rserver..."
 
-module load openssl/1.1.1b-gcc/9.5.0
+export LD_PRELOAD="/software/spackages/linux-rocky8-x86_64/gcc-9.5.0/openssl-1.1.1b-4vv4aak5ml5bapbjypskobgsfynlomdh/lib/libcrypto.so.1.1":$LD_PRELOAD
+echo $LD_PRELOAD
+
 ${RSPATH}/rserver \
   --www-port ${port} \
   --auth-none 0 \
