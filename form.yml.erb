@@ -1,21 +1,3 @@
-<%-
-  # get _list_modules
-  m_cmd = "/zfs/citi/ood/parse_modules.sh"
-  begin
-    output, status = Open3.capture2e(m_cmd)
-    if status.success?
-      _list_modules = output.split(" ").map(&:strip).reject(&:blank?).sort
-    else
-      raise output
-    end
-  rescue => e
-    _list_modules = []
-    m_error = e.message.strip
-  end
-
--%>
----
-
 # **MUST** set cluster id here that matches cluster configuration file located
 # under /etc/ood/config/clusters.d/*.yml
 
