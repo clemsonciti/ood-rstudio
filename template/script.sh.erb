@@ -4,6 +4,10 @@
 setup_env () {
   module purge
 
+  if [ <%= context.version %> = "r/4.2.1" ]; then 
+    export MODULEPATH=/zfs/gcl/software/gbf/modulefiles:$MODULEPATH
+  fi
+  
   module load <%= context.version %>
   echo R version is <%= context.version %>
   RSPATH="/software/external/rstudio/2022.12.1-366/bin"
