@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+<% if context.use_container == "No" %>
 # Load the required environment
 setup_env () {
   module purge
@@ -10,14 +11,16 @@ setup_env () {
   
   module load <%= context.version %>
   echo R version is <%= context.version %>
-  RSPATH="/software/external/rstudio/2022.12.1-366/bin"
+  export RSPATH="/software/external/rstudio/2022.12.1-366/bin"
   #RSPATH="/software/external/rstudio/2022.07.0-548/bin"
   #RSPATH="/software/external/rstudio/1.3.959/bin"
   #RSPATH="/software/external/rstudio/1.4.1717/bin"
   module load <%= context.modules %>
 }
 setup_env
-
+<% else %>
+export RSPATH=/usr/lib/rstudio-server/bin/
+<% end %>
 #
 # Start RStudio Server
 #
@@ -50,6 +53,7 @@ sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
   # Launch the original command
   echo "Launching rsession..."
   exec ${RSPATH}/rsession --r-libs-user "${R_LIBS_USER}" "\${@}"
+
 EOL
 )
 chmod 700 "${RSESSION_WRAPPER_FILE}"
@@ -91,7 +95,7 @@ echo "Starting up rserver..."
 module load anaconda3/2022.05-gcc/9.5.0
 export LD_PRELOAD=/lib64/libuuid.so.1:$LD_PRELOAD
 
-${RSPATH}/rserver \
+echo ${RSPATH}/rserver \
   --www-port ${port} \
   --auth-none 0 \
   --auth-pam-helper-path "${RSTUDIO_AUTH}" \
@@ -100,7 +104,14 @@ ${RSPATH}/rserver \
   --server-data-dir "${TMPDIR}" \
   --server-working-dir "${TMPDIR}" \
   --server-user "${USER}" \
-  --database-config-file "${RSTUDIO_DB_CONF_FILE}"
+  --database-config-file "${RSTUDIO_DB_CONF_FILE}" >> $TMPDIR/launch.sh
+
+<% if context.use_container == "Yes" %>
+apptainer run -B /local_scratch -B /scratch/$USER <%= context.container_path %> bash $TMPDIR/launch.sh
+<% else %>
+bash $TMPDIR/launch.sh
+<% end %>
+
 
 #  --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key"
   

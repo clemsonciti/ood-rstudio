@@ -103,11 +103,24 @@ attributes:
     help: "This defines the version of R you want to load."
     value: "r/4.0.5-gcc/9.5.0"
     options:
+      - [ "R 4.2.2 (Intel MKL)", "r/4.2.2-gcc/9.5.0-mkl"]
       - [ "R 4.2.1 (GCL)", "r/4.2.1"]
       - [ "R 4.2.0", "r/4.2.0-gcc/9.5.0"]
       - [ "R 4.1.3", "r/4.1.3-gcc/9.5.0"]
       - [ "R 4.0.5", "r/4.0.5-gcc/9.5.0"]
       - [ "R 3.6.3", "r/3.6.3-gcc/9.5.0"]
+
+  container_path:
+    label: "Path to Container .sif"
+    value: ""
+
+  use_container:
+    label: "Use Containerized RStudio"
+    widget: select
+    value: "No"
+    options:
+        - ["Yes", data-hide-version: true, data-hide-modules: true, data-hide-pbs-extras: true, data-hide-pbs-ngpus: true, data-hide-pbs-gpu-model: true]
+        - ["No", data-hide-container-path: true]
 
   modules: 
     label: "List of modules to be loaded"
@@ -128,6 +141,8 @@ attributes:
 #   Dashboard
 form:
   - pbs_select
+  - use_container
+  - container_path
   - pbs_ncpus
   - pbs_mem
   - pbs_ngpus

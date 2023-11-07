@@ -5,3 +5,10 @@ subcategory: Servers
 role: batch_connect
 description: |
   This app will launch an RStudio server on one or more nodes.
+
+  <div class="alert alert-info" >
+    <strong>Recent updates</strong>
+    <ul>
+      <li>Added the option to launch RStudio in a container (must provide own container image)</li>
+    </ul>
+  </div>
